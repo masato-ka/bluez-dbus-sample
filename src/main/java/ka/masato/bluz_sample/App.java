@@ -34,9 +34,10 @@ public class App
     	try{
     		bluetoothDevice.connect();
         	List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
-        	List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
-        	
-        	characteristics.stream().map(e->e.getUuid()).forEach(System.out::println);
+        	if( servicies.size() > 0){
+        		List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
+        		characteristics.stream().map(e->e.getUuid()).forEach(System.out::println);
+        	}
 
     	}catch(DBusExecutionException e){
     		
