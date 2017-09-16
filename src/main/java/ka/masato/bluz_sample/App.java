@@ -37,10 +37,13 @@ public class App
         	if( servicies.size() > 0){
         		List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
         		characteristics.stream().map(e->e.getUuid()).forEach(System.out::println);
+        	}else{
+        		System.out.println("No servicies");
         	}
 
     	}catch(DBusExecutionException e){
-    		
+    		System.out.println("FailedConnection");
+    		e.printStackTrace();
     	}
     	}
     }
