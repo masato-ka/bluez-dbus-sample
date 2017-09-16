@@ -27,6 +27,7 @@ public class App
     	result.stream().map(e->e.getDeviceName()).forEach(System.out::println);
     	
     	List<BluetoothDevice> devicies = deviceManager.getDevices();
+    	devicies.stream().map(e->e.getName()).forEach(System.out::println);
     	BluetoothDevice bluetoothDevice = devicies.get(0);
     	bluetoothDevice.connect();
     	List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
