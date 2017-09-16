@@ -2,6 +2,8 @@ package ka.masato.bluz_sample;
 
 import java.util.List;
 import org.freedesktop.dbus.exceptions.DBusException;
+import org.freedesktop.dbus.exceptions.DBusExecutionException;
+
 import com.github.hypfvieh.bluetooth.DeviceManager;
 import com.github.hypfvieh.bluetooth.wrapper.BluetoothAdapter;
 import com.github.hypfvieh.bluetooth.wrapper.BluetoothDevice;
@@ -28,14 +30,17 @@ public class App
     	
     	List<BluetoothDevice> devicies = deviceManager.getDevices();
     	devicies.stream().map(e->e.getName()).forEach(System.out::println);
-    	BluetoothDevice bluetoothDevice = devicies.get(0);
-    	bluetoothDevice.connect();
-    	List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
-    	List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
-    	
-    	characteristics.stream().map(e->e.getUuid()).forEach(System.out::println);
-    	
-    	
-        System.out.println( "Hello World!" );
+    	for(BluetoothDevice bluetoothDevice : devicies){
+    	try{
+    		bluetoothDevice.connect();
+        	List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
+        	List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
+        	
+        	characteristics.stream().map(e->e.getUuid()).forEach(System.out::println);
+
+    	}catch(DBusExecutionException e){
+    		
+    	}
+    	}
     }
 }
