@@ -37,9 +37,8 @@ public class App
     		
     			if(bluetoothDevice.getName().equals("Env")){
     			try{
-	    			bluetoothDevice.connect();
-	    			while(!bluetoothDevice.isConnected()){Thread.sleep(3000);}
-	    			bluetoothDevice.getGattServices();
+//	    			bluetoothDevice.connect();
+	//    			while(!bluetoothDevice.isConnected()){Thread.sleep(3000);}
 	    			List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
 	    			if( servicies.size() > 0){
 	    				List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
