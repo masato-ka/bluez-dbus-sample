@@ -16,7 +16,7 @@ import com.github.hypfvieh.bluetooth.wrapper.BluetoothGattService;
  */
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws InterruptedException
     {
     	try {
 			DeviceManager.createInstance(false);
@@ -38,6 +38,7 @@ public class App
     			if(bluetoothDevice.getName().equals("Env")){
     			try{
 	    			bluetoothDevice.connect();
+	    			while(!bluetoothDevice.isConnected()){Thread.sleep(3000);}
 	    			bluetoothDevice.getGattServices();
 	    			List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
 	    			if( servicies.size() > 0){
