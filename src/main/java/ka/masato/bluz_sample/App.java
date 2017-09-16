@@ -31,20 +31,21 @@ public class App
     	List<BluetoothDevice> devicies = deviceManager.getDevices();
     	devicies.stream().map(e->e.getName()).forEach(System.out::println);
     	for(BluetoothDevice bluetoothDevice : devicies){
-    	try{
-    		bluetoothDevice.connect();
-        	List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
-        	if( servicies.size() > 0){
-        		List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
-        		characteristics.stream().map(e->e.getUuid()).forEach(System.out::println);
-        	}else{
-        		System.out.println("No servicies");
-        	}
-
-    	}catch(DBusExecutionException e){
-    		System.out.println("FailedConnection");
-    		e.printStackTrace();
-    	}
-    	}
+	    	if(bluetoothDevice.getName().equals("Env")){
+	    		try{
+	    			bluetoothDevice.connect();
+	    			List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
+	    			if( servicies.size() > 0){
+	    				List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
+	    				characteristics.stream().map(e->e.getUuid()).forEach(System.out::println);
+	    			}else{
+	    				System.out.println("No servicies");
+	    			}	
+	    		}catch(DBusExecutionException e){
+	    			System.out.println("FailedConnection");
+	    			e.printStackTrace();
+	    		}
+	    	}
+	    }
     }
 }
