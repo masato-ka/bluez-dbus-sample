@@ -26,14 +26,19 @@ public class App
 		}
     	DeviceManager deviceManager = DeviceManager.getInstance();
     	List<BluetoothAdapter> result = deviceManager.getAdapters();
+    	BluetoothAdapter bluetoothAdaptor = result.get(0);	
     	result.stream().map(e->e.getDeviceName()).forEach(System.out::println);
     	
     	List<BluetoothDevice> devicies = deviceManager.getDevices();
     	devicies.stream().map(e->e.getName()).forEach(System.out::println);
+    	System.out.println("search characteristic");
     	for(BluetoothDevice bluetoothDevice : devicies){
-	    	if(bluetoothDevice.getName().equals("Env")){
-	    		try{
+    			System.out.println(bluetoothDevice.getName());
+    		
+    			if(bluetoothDevice.getName().equals("Env")){
+    			try{
 	    			bluetoothDevice.connect();
+	    			bluetoothDevice.getGattServices();
 	    			List<BluetoothGattService> servicies = bluetoothDevice.getGattServices();
 	    			if( servicies.size() > 0){
 	    				List<BluetoothGattCharacteristic> characteristics  = servicies.get(0).getGattCharacteristics();
@@ -46,6 +51,6 @@ public class App
 	    			e.printStackTrace();
 	    		}
 	    	}
-	    }
+    	}
     }
 }
