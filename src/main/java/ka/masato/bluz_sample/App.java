@@ -1,5 +1,8 @@
 package ka.masato.bluz_sample;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.exceptions.DBusExecutionException;
@@ -16,26 +19,33 @@ import com.github.hypfvieh.bluetooth.wrapper.BluetoothGattService;
  */
 public class App 
 {
-    public static void main( String[] args ) throws InterruptedException
+    public static void main( String[] args ) throws InterruptedException, IOException
     {
+    	
     	try {
 			DeviceManager.createInstance(false);
 		} catch (DBusException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		    System.out.println("failed create instance caused by D-BUS.");
 		}
     	DeviceManager deviceManager = DeviceManager.getInstance();
+    	
     	List<BluetoothAdapter> result = deviceManager.getAdapters();
     	BluetoothAdapter bluetoothAdaptor = result.get(0);	
+    	System.out.println("-----------------HCI Interface---------------------");
     	result.stream().map(e->e.getDeviceName()).forEach(System.out::println);
-    	
-    	List<BluetoothDevice> devicies = deviceManager.getDevices();
+    	System.out.println("-----------------Scan BLE Devce---------------------");
+    	bluetoothAdaptor.startDiscovery();
+    	Thread.sleep(5000);
+    	bluetoothAdaptor.stopDiscovery();
+    	System.out.println("-----------------Result BLE Devce----------------");
+	   	List<BluetoothDevice> devicies = deviceManager.getDevices();
     	devicies.stream().map(e->e.getName()).forEach(System.out::println);
-    	System.out.println("search characteristic");
+    	BufferedReader buffredReader = new BufferedReader(new InputStreamReader(System.in));
+    	System.out.print("Choose device:");
+    	String deviceName = buffredReader.readLine();
+    	System.out.println("-----------------Characteristics----------------");
     	for(BluetoothDevice bluetoothDevice : devicies){
-    			System.out.println(bluetoothDevice.getName());
-    		
-    			if(bluetoothDevice.getName().equals("EnvSensor-BL01")){
+    		if(bluetoothDevice.getName().equals(deviceName)){
     			try{
 	    			bluetoothDevice.connect();
 					bluetoothDevice.refreshGattServices();
