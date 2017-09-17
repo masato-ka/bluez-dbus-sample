@@ -33,11 +33,11 @@ public class App
     	BluetoothAdapter bluetoothAdaptor = result.get(0);	
     	System.out.println("-----------------HCI Interface---------------------");
     	result.stream().map(e->e.getDeviceName()).forEach(System.out::println);
-    	System.out.println("-----------------Scan BLE Devce---------------------");
+    	System.out.println("-----------------Scan BLE Device---------------------");
     	bluetoothAdaptor.startDiscovery();
     	Thread.sleep(5000);
     	bluetoothAdaptor.stopDiscovery();
-    	System.out.println("-----------------Result BLE Devce----------------");
+    	System.out.println("-----------------Result BLE Device----------------");
 	   	List<BluetoothDevice> devicies = deviceManager.getDevices();
     	devicies.stream().map(e->e.getName()).forEach(System.out::println);
     	BufferedReader buffredReader = new BufferedReader(new InputStreamReader(System.in));
