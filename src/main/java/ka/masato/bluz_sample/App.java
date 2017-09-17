@@ -35,7 +35,7 @@ public class App
     	for(BluetoothDevice bluetoothDevice : devicies){
     			System.out.println(bluetoothDevice.getName());
     		
-    			if(bluetoothDevice.getName().equals("Env")){
+    			if(bluetoothDevice.getName().equals("EnvSensor-BL01")){
     			try{
 	    			bluetoothDevice.connect();
 					bluetoothDevice.refreshGattServices();
